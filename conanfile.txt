@@ -1,0 +1,10 @@
+# search library from https://conan.io/center/recipes
+
+
+[requires]
+redis-plus-plus/1.3.13
+[generators]
+CMakeDeps
+CMakeToolchain
+[layout]
+cmake_layout
