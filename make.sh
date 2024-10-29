@@ -1,10 +1,11 @@
-# 获取当前脚本所在目录的绝对路径
+# Get the absolute path of the current script directory
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 
-# 获取目录名并替换空格为下划线
+# Get the directory name and replace spaces with underscores
 project_name=$(basename -- "$script_dir" | tr ' ' '_')
 
-# 输出 project_name 的值
+# 以当前目录名作为项目名
+# Output the value of project_name
 echo "ProjectName: $project_name"
 
 function exit_on_error() {
@@ -16,16 +17,15 @@ function exit_on_error() {
     fi
 }
 
-# 定义一个函数，用于获取 cmake 的版本号
+# Define a function to get the version of cmake
 get_cmake_version() {
-    # 调用 cmake --version 命令，并获取第一行的输出
+    # Call the cmake --version command and get the first line of output
     local output=$(cmake --version | head -n 1)
-    # 使用 sed 命令，替换掉 version 前面的部分，只保留数字和点
+    # Use the sed command to replace the part before version, keeping only the numbers and dots
     local version=$(echo "$output" | sed 's/.*version //')
-    # 返回版本号
+    # Return the version number
     echo "$version"
 }
-
 
 function do_cmake() {
     echo "do_cmake pwd : " $(pwd)
@@ -82,6 +82,7 @@ usage() {
     echo "Options:"
     echo "  -a    cmake conan, make and run"
     echo "  -b    cmake conan and make"
+    echo "  -c    clean build directory"
 }
 
 
@@ -110,4 +111,3 @@ if [ $OPTIND -eq 1 ]; then
     do_make && do_run
     exit 0
 fi
-
